@@ -1,0 +1,7 @@
+flask==3.0.0
+openai-whisper==20231117
+tqdm==4.66.1
+python-dotenv==1.0.0
+urllib3==2.1.0
+certifi==2024.2.2
+requests==2.31.0
