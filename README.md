@@ -15,7 +15,7 @@ Voxion is a powerful speech recognition and annotation system that supports mult
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/voxion.git
+git clone https://github.com/paulhandle/voxion.git
 cd voxion
 ```
 
