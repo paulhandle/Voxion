@@ -10,74 +10,27 @@ SESSION_PERMANENT = False
 PERMANENT_SESSION_LIFETIME = 3600  # 1 hour
 
 # Language configurations
-LANGUAGES = {
-    # East Asian languages
-    'zh': {'name': 'Chinese (Mandarin)', 'description': 'Chinese Mandarin'},
-    'zh-tw': {'name': 'Chinese (Taiwan)', 'description': 'Traditional Chinese (Taiwan)'},
-    'zh-hk': {'name': 'Chinese (Hong Kong)', 'description': 'Traditional Chinese (Hong Kong)'},
-    'zh-cn-sichuan': {'name': 'Chinese (Sichuan Dialect)', 'description': 'Sichuan Dialect'},
-    'zh-cn-cantonese': {'name': 'Chinese (Cantonese)', 'description': 'Cantonese'},
-    'ja': {'name': 'Japanese', 'description': 'Japanese'},
-    'ko': {'name': 'Korean', 'description': 'Korean'},
+BABEL_DEFAULT_LOCALE = 'en'
+BABEL_TRANSLATION_DIRECTORIES = 'translations'
 
-    # Southeast Asian languages
-    'vi': {'name': 'Vietnamese', 'description': 'Vietnamese'},
-    'th': {'name': 'Thai', 'description': 'Thai'},
-    'id': {'name': 'Indonesian', 'description': 'Indonesian'},
-    'ms': {'name': 'Malay', 'description': 'Malay'},
-
-    # South Asian languages
-    'hi': {'name': 'Hindi', 'description': 'Hindi'},
-    'ta': {'name': 'Tamil', 'description': 'Tamil'},
-    'ur': {'name': 'Urdu', 'description': 'Urdu'},
-
-    # European languages
-    'en': {'name': 'English', 'description': 'English'},
-    'fr': {'name': 'French', 'description': 'French'},
-    'de': {'name': 'German', 'description': 'German'},
-    'es': {'name': 'Spanish', 'description': 'Spanish'},
-    'it': {'name': 'Italian', 'description': 'Italian'},
-    'pt': {'name': 'Portuguese', 'description': 'Portuguese'},
-    'ru': {'name': 'Russian', 'description': 'Russian'},
-
-    # Middle Eastern languages
-    'ar': {'name': 'Arabic', 'description': 'Arabic'},
-    'fa': {'name': 'Persian', 'description': 'Persian'},
-    'tr': {'name': 'Turkish', 'description': 'Turkish'},
-
-    # African languages
-    'sw': {'name': 'Swahili', 'description': 'Swahili'},
-    'am': {'name': 'Amharic', 'description': 'Amharic'},
+SUPPORTED_LANGUAGES = ['en', 'zh']
+LANGUAGE_NAMES = {
+    'en': 'English',
+    'zh': '中文'
 }
 
-# Model configurations with descriptions
+# Whisper model configurations
 WHISPER_MODELS = {
-    'tiny': {
-        'name': 'Tiny',
-        'description': 'Fastest, less accurate',
-        'size_mb': 150
-    },
-    'base': {
-        'name': 'Base',
-        'description': 'Fast, balanced accuracy',
-        'size_mb': 300
-    },
-    'small': {
-        'name': 'Small',
-        'description': 'Good accuracy, moderate speed',
-        'size_mb': 1000
-    },
-    'medium': {
-        'name': 'Medium',
-        'description': 'High accuracy, slower',
-        'size_mb': 2500
-    },
-    'large': {
-        'name': 'Large',
-        'description': 'Highest accuracy, slowest',
-        'size_mb': 6000
-    }
+    'tiny': {'name': 'Tiny', 'size': '75M'},
+    'base': {'name': 'Base', 'size': '142M'},
+    'small': {'name': 'Small', 'size': '466M'},
+    'medium': {'name': 'Medium', 'size': '1.5G'},
+    'large': {'name': 'Large', 'size': '2.9G'},
 }
+
+# File upload configurations
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
 
 # Codatta API configuration
 CODATTA_API_BASE_URL = os.getenv('CODATTA_API_BASE_URL', 'https://api.codatta.com/v1')

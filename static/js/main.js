@@ -40,6 +40,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 恢复保存的数据
     restoreState();
+    
+    // 语言选择事件处理
+    elements.languageSelect.addEventListener('change', function() {
+        const selectedLang = this.value;
+        fetch(`/set_language/${selectedLang}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // 刷新页面以更新翻译
+                  window.location.reload();
+              }
+          });
+    });
 });
 
 // 录音相关函数
@@ -130,24 +147,24 @@ function createSegmentElement(segment, index) {
     segmentDiv.innerHTML = `
         <div class="segment-controls">
             <button class="btn btn-primary btn-sm play-segment-btn">
-                <i class="fas fa-play"></i> 播放片段
+                <i class="fas fa-play"></i> ${translations.playSegment}
             </button>
             <button class="btn btn-info btn-sm edit-time-btn">
-                <i class="fas fa-clock"></i> 调整时间
+                <i class="fas fa-clock"></i> ${translations.adjustTime}
             </button>
             <button class="btn btn-danger btn-sm delete-segment-btn">
-                <i class="fas fa-trash"></i> 删除片段
+                <i class="fas fa-trash"></i> ${translations.deleteSegment}
             </button>
         </div>
         <div class="time-controls">
             <div class="row">
                 <div class="col-md-6">
-                    <label>开始时间 (秒):</label>
+                    <label>${translations.startTime}:</label>
                     <input type="number" class="form-control start-time" 
                            value="${segment.start}" step="0.1" min="0">
                 </div>
                 <div class="col-md-6">
-                    <label>结束时间 (秒):</label>
+                    <label>${translations.endTime}:</label>
                     <input type="number" class="form-control end-time" 
                            value="${segment.end}" step="0.1" min="0">
                 </div>

@@ -5,3 +5,4 @@ python-dotenv==1.0.0
 urllib3==2.1.0
 certifi==2024.2.2
 requests==2.31.0
+Flask-Babel==4.0.0

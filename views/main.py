@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, g
+from flask_babel import get_locale
 import os
 import uuid
 import json
-from config import LANGUAGES, WHISPER_MODELS
+from config import SUPPORTED_LANGUAGES, WHISPER_MODELS, LANGUAGE_NAMES
 from services.transcription import transcribe_audio, get_downloaded_models
 from services.codatta import CodattaService
 
@@ -11,12 +12,23 @@ main_bp = Blueprint('main', __name__)
 # Initialize Codatta service
 codatta_service = CodattaService()
 
+@main_bp.before_request
+def before_request():
+    """Set language code for templates"""
+    g.lang_code = str(get_locale())
+
+@main_bp.route('/set_language/<lang>')
+def set_language(lang):
+    """Set the user's preferred language"""
+    session['lang'] = lang
+    return redirect(request.referrer or url_for('main.index'))
+
 @main_bp.route('/')
 def index():
     """Render main page"""
     downloaded_models = get_downloaded_models()
     return render_template('index.html', 
-                         languages=LANGUAGES, 
+                         languages=LANGUAGE_NAMES,
                          models=WHISPER_MODELS,
                          downloaded_models=downloaded_models)
 
@@ -76,7 +88,7 @@ def save_annotation():
 @main_bp.route('/languages', methods=['GET'])
 def get_languages():
     """Get list of supported languages"""
-    return jsonify(LANGUAGES)
+    return jsonify(SUPPORTED_LANGUAGES)
 
 @main_bp.route('/models', methods=['GET'])
 def get_models():
@@ -126,4 +138,4 @@ def submit_annotation():
     if not result:
         return jsonify({'error': 'Failed to submit annotation'}), 500
         
-    return jsonify(result)
+    return jsonify({})
