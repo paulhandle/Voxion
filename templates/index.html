@@ -17,8 +17,9 @@
                     {{ _('Language') }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang='en') }}">English</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang='zh') }}">中文</a></li>
+                    {% for code, name in ui_languages.items() %}
+                        <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang=code) }}">{{ name }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -29,11 +30,11 @@
                 <!-- 语言和模型选择 -->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="languageSelect" class="form-label">{{ _('Select Language:') }}</label>
+                        <label for="languageSelect" class="form-label">{{ _('Select Speech Language:') }}</label>
                         <select class="form-select" id="languageSelect">
-                            {% for code, name in languages.items() %}
-                                <option value="{{ code }}" {% if code == session.get('lang', config['BABEL_DEFAULT_LOCALE']) %}selected{% endif %}>
-                                    {{ name }}
+                            {% for code, info in speech_languages.items() %}
+                                <option value="{{ code }}" {% if code == session.get('speech_lang', 'en') %}selected{% endif %}>
+                                    {{ info.name }} ({{ info.description }})
                                 </option>
                             {% endfor %}
                         </select>

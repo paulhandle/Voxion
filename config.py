@@ -9,14 +9,43 @@ SESSION_TYPE = 'filesystem'
 SESSION_PERMANENT = False
 PERMANENT_SESSION_LIFETIME = 3600  # 1 hour
 
-# Language configurations
+# UI Language configurations (for Babel)
 BABEL_DEFAULT_LOCALE = 'en'
 BABEL_TRANSLATION_DIRECTORIES = 'translations'
 
-SUPPORTED_LANGUAGES = ['en', 'zh']
-LANGUAGE_NAMES = {
+SUPPORTED_UI_LANGUAGES = ['en', 'zh']
+UI_LANGUAGE_NAMES = {
     'en': 'English',
     'zh': '中文'
+}
+
+# Speech Recognition Language configurations
+SPEECH_LANGUAGES = {
+    # East Asian languages
+    'zh': {'name': 'Chinese (Mandarin)', 'description': '普通话'},
+    'zh-hk': {'name': 'Chinese (Cantonese)', 'description': '广东话'},
+    'ja': {'name': 'Japanese', 'description': '日本語'},
+    'ko': {'name': 'Korean', 'description': '한국어'},
+
+    # European languages
+    'en': {'name': 'English', 'description': 'English'},
+    'fr': {'name': 'French', 'description': 'Français'},
+    'de': {'name': 'German', 'description': 'Deutsch'},
+    'es': {'name': 'Spanish', 'description': 'Español'},
+    'it': {'name': 'Italian', 'description': 'Italiano'},
+    'pt': {'name': 'Portuguese', 'description': 'Português'},
+    'ru': {'name': 'Russian', 'description': 'Русский'},
+
+    # Southeast Asian languages
+    'vi': {'name': 'Vietnamese', 'description': 'Tiếng Việt'},
+    'th': {'name': 'Thai', 'description': 'ภาษาไทย'},
+    'id': {'name': 'Indonesian', 'description': 'Bahasa Indonesia'},
+    'ms': {'name': 'Malay', 'description': 'Bahasa Melayu'},
+
+    # South Asian languages
+    'hi': {'name': 'Hindi', 'description': 'हिन्दी'},
+    'ta': {'name': 'Tamil', 'description': 'தமிழ்'},
+    'ur': {'name': 'Urdu', 'description': 'اردو'}
 }
 
 # Whisper model configurations

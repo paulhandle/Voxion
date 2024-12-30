@@ -3,7 +3,12 @@ from flask_babel import get_locale
 import os
 import uuid
 import json
-from config import SUPPORTED_LANGUAGES, WHISPER_MODELS, LANGUAGE_NAMES
+from config import (
+    SUPPORTED_UI_LANGUAGES,
+    UI_LANGUAGE_NAMES,
+    SPEECH_LANGUAGES,
+    WHISPER_MODELS
+)
 from services.transcription import transcribe_audio, get_downloaded_models
 from services.codatta import CodattaService
 
@@ -20,15 +25,18 @@ def before_request():
 @main_bp.route('/set_language/<lang>')
 def set_language(lang):
     """Set the user's preferred language"""
-    session['lang'] = lang
-    return redirect(request.referrer or url_for('main.index'))
+    if lang in SUPPORTED_UI_LANGUAGES:
+        session['lang'] = lang
+        return redirect(request.referrer or url_for('main.index'))
+    return jsonify({'error': 'Unsupported language'}), 400
 
 @main_bp.route('/')
 def index():
     """Render main page"""
     downloaded_models = get_downloaded_models()
-    return render_template('index.html', 
-                         languages=LANGUAGE_NAMES,
+    return render_template('index.html',
+                         ui_languages=UI_LANGUAGE_NAMES,
+                         speech_languages=SPEECH_LANGUAGES,
                          models=WHISPER_MODELS,
                          downloaded_models=downloaded_models)
 
@@ -88,7 +96,7 @@ def save_annotation():
 @main_bp.route('/languages', methods=['GET'])
 def get_languages():
     """Get list of supported languages"""
-    return jsonify(SUPPORTED_LANGUAGES)
+    return jsonify(SPEECH_LANGUAGES)
 
 @main_bp.route('/models', methods=['GET'])
 def get_models():

@@ -10,7 +10,7 @@ def get_locale():
     """Get the locale for the current request."""
     if 'lang' in session:
         return session['lang']
-    return request.accept_languages.best_match(config.SUPPORTED_LANGUAGES)
+    return request.accept_languages.best_match(config.SUPPORTED_UI_LANGUAGES)
 
 def create_app():
     """Create and configure the Flask application."""
@@ -30,7 +30,7 @@ def create_app():
     
     @app.route('/set_language/<language>', methods=['POST'])
     def set_language(language):
-        if language in app.config['SUPPORTED_LANGUAGES']:
+        if language in app.config['SUPPORTED_UI_LANGUAGES']:
             session['lang'] = language
             return jsonify({'success': True})
         return jsonify({'success': False, 'error': 'Invalid language'})
